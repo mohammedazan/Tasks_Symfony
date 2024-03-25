@@ -5,6 +5,7 @@ namespace App\Controller;
 
 //use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+use App\Repository\TasksRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,24 +19,8 @@ class LuckyController extends AbstractController
     }
 
     #[Route('/indexbage', name: 'test_route2')]
-    public function affiche()
-    {   $tasks = [
-        [
-            "id" => 1 ,
-            "titel" => "math home work ",
-            "discription" => "math equations to coplete"
-        ],
-        [
-            "id" => 2 ,
-            "titel" => "sciece  home work ",
-            "discription" => "sciece task to coplete"
-        ],
-        [
-            "id" => 3 ,
-            "titel" => "arabice  home work ",
-            "discription" => "arabice  task  to coplete"
-        ],
-    ] ; 
+    public function affiche( TasksRepository $tasksRepository)
+    {   $tasks = $tasksRepository->findAll() ;
         return   $this->render('index.html.twig',[ "TaskArray" => $tasks]) ;
 
     }
