@@ -1,0 +1,33 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Index{% endblock %}
+
+{% block body %}
+    <div class="row my-5">
+      <div class="col-md-8 mx-auto">
+        <div class="card">
+            <table border="1" >
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Titel</th>
+                        <th>Description</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tasks in TaskArray %}
+                       <tr>
+                        <td>{{tasks.id}}</td>
+                        <td>{{tasks.titel}}</td>
+                        <td>{{tasks.discription}}</td>
+                        <th></th>
+                      </tr>
+                    {% endfor %} 
+                </tbody>
+            </table> 
+        </div>
+      </div>
+    </div>
+{% endblock %}
+
