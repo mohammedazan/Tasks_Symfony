@@ -6,7 +6,7 @@
     <div class="row my-5">
       <div class="col-md-8 mx-auto">
               <div class="card">
-                  <table border="1">
+                  <table border="1" >
                       <thead>
                           <tr>
                               <th>ID</th>
@@ -22,9 +22,9 @@
                                   <td>{{ task.titel }}</td>
                                   <td>{{ task.body }}</td>
                                   <th>
-                                      <button style="background-color: green; color: white;">Add</button>
-                                      <button style="background-color: red; color: white;">Delete</button>
-                                      <button style="background-color: orange; color: white;">Edit</button>
+                                    <a class="btn btn-add" href={{ path('tasks_show',{id : task.id })}}>view</a>
+                                    <a class="btn btn-delete">Delete</a>
+                                    <a class="btn btn-edit">Edit</a>
                                   </th>
                               </tr>
                           {% endfor %}
