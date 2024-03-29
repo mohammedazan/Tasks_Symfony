@@ -5,6 +5,8 @@ namespace App\Controller;
 
 //use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+use App\Entity\Tasks;
+use App\Form\TaskType;
 use App\Repository\TasksRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,8 +22,6 @@ class LuckyController extends AbstractController
             $this->tasksRepository = $tasksRepository ;
         }
 
-
-
         #[Route('/', name: 'tasks_list')]
         public function affiche()
         {   $tasks = $this->tasksRepository->findAll() ;
@@ -35,4 +35,19 @@ class LuckyController extends AbstractController
             return   $this->render('showtasks.html.twig',[ "TaskArray" => $tasks]) ;
 
         }   
+
+        #[Route('/newtasks', name: 'tasks_add')]
+        public function CreateTasks(){
+            $tasks = new Tasks();
+            // ...
+            $form = $this->createForm(TaskType::class, $tasks);
+
+            if($form->isSubmitted() && $form->isValid()){
+                
+            }
+    
+            return $this->render('add.html.twig', [
+                'form' => $form->createView(),
+            ]);
+        }
 }
