@@ -8,9 +8,12 @@ namespace App\Controller;
 use App\Entity\Tasks;
 use App\Form\TaskType;
 use App\Repository\TasksRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+//use Doctrine\Persistence\ManagerRegistry;
 
 class LuckyController extends AbstractController 
 {       
@@ -18,7 +21,7 @@ class LuckyController extends AbstractController
         private $tasksRepository ;
 
         public function __construct(TasksRepository $tasksRepository)
-        {
+        {   
             $this->tasksRepository = $tasksRepository ;
         }
 
@@ -37,13 +40,18 @@ class LuckyController extends AbstractController
         }   
 
         #[Route('/newtasks', name: 'tasks_add')]
-        public function CreateTasks(){
+        public function CreateTasks(Request $request , EntityManagerInterface $em): Response{
             $tasks = new Tasks();
-            // ...
-            $form = $this->createForm(TaskType::class, $tasks);
 
+            $form = $this->createForm(TaskType::class, $tasks);
+            $form = $form->handleRequest($request);
+            
             if($form->isSubmitted() && $form->isValid()){
-                
+
+                $tasks = $form->getData();
+                $em -> persist($tasks);
+                $em ->flush();
+                return $this->redirectToRoute('tasks_list');
             }
     
             return $this->render('add.html.twig', [
