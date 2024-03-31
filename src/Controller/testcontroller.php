@@ -58,4 +58,24 @@ class LuckyController extends AbstractController
                 'form' => $form->createView(),
             ]);
         }
+
+
+        #[Route('/updatetasks/{id}', name: 'tasks_update')]
+        public function UpdateTasks(Tasks $tasks ,Request $request , EntityManagerInterface $em): Response{
+
+            $form = $this->createForm(TaskType::class, $tasks);
+            $form = $form->handleRequest($request);
+            
+            if($form->isSubmitted() && $form->isValid()){
+
+                $tasks = $form->getData();
+                $em -> persist($tasks);
+                $em ->flush();
+                return $this->redirectToRoute('tasks_list');
+            }
+    
+            return $this->render('update.html.twig', [
+                'form' => $form->createView(),
+            ]);
+        }
 }

@@ -23,8 +23,8 @@
                                   <td>{{ task.body }}</td>
                                   <th>
                                     <a class="btn btn-add" href={{ path('tasks_show',{id : task.id })}}>Show</a>
-                                    <a class="btn btn-delete">Delete</a>
-                                    <a class="btn btn-edit">Edit</a>
+                                    <a class="btn btn-delete" href={{  path('tasks_update', {id : task.id }) }} >Edit</a>
+                                    <a class="btn btn-edit">Delete</a>
                                   </th>
                               </tr>
                           {% endfor %}
