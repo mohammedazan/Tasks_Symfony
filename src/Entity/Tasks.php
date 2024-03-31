@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\TasksRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TasksRepository::class)]
 class Tasks
@@ -15,9 +17,14 @@ class Tasks
     private ?int $id = null;
 
     #[ORM\Column(length: 250)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max:50,min:4)]
+
     private ?string $titel = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\Length(max:100,min:4,maxMessage:"This value is too short. It should have 100 characters ",minMessage:"This value is too short. It should have 4 characters or more")]
+
     private ?string $body = null;
 
     public function getId(): ?int
