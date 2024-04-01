@@ -31,6 +31,8 @@ class LuckyController extends AbstractController
             return   $this->render('index.html.twig',[ "TaskArray" => $tasks]) ;
 
         }        
+
+        
         
         #[Route('/tasks/{id}', name: 'tasks_show')]
         public function ShowTasks($id)
@@ -60,7 +62,7 @@ class LuckyController extends AbstractController
         }
 
 
-        #[Route('/updatetasks/{id}', name: 'tasks_update')]
+        #[Route('/update_tasks/{id}', name: 'tasks_update')]
         public function UpdateTasks(Tasks $tasks ,Request $request , EntityManagerInterface $em): Response{
 
             $form = $this->createForm(TaskType::class, $tasks);
