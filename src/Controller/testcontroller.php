@@ -63,16 +63,20 @@ class LuckyController extends AbstractController
 
 
         #[Route('/update_tasks/{id}', name: 'tasks_update')]
-        public function UpdateTasks(Tasks $tasks ,Request $request , EntityManagerInterface $em): Response{
-
-            $form = $this->createForm(TaskType::class, $tasks);
-            $form = $form->handleRequest($request);
+        public function UpdateTasks(int $id, Request $request, EntityManagerInterface $em): Response
+        {
+            // Retrieve the task by its ID
+            $task = $em->getRepository(Tasks::class)->find($id);
             
-            if($form->isSubmitted() && $form->isValid()){
-
-                $tasks = $form->getData();
-                $em -> persist($tasks);
-                $em ->flush();
+            if (!$task) {
+                throw $this->createNotFoundException('Task not found');
+            }
+    
+            $form = $this->createForm(TaskType::class, $task);
+            $form->handleRequest($request);
+            
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em->flush();
                 return $this->redirectToRoute('tasks_list');
             }
     
@@ -80,4 +84,6 @@ class LuckyController extends AbstractController
                 'form' => $form->createView(),
             ]);
         }
+        
+    
 }
