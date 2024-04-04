@@ -53,6 +53,10 @@ class LuckyController extends AbstractController
                 $tasks = $form->getData();
                 $em -> persist($tasks);
                 $em ->flush();
+                $this->addFlash(
+                    'warning',
+                    'Your changes were saved!'
+                );
                 return $this->redirectToRoute('tasks_list');
             }
     
@@ -77,6 +81,10 @@ class LuckyController extends AbstractController
             
             if ($form->isSubmitted() && $form->isValid()) {
                 $em->flush();
+                $this->addFlash(
+                    'warning',
+                    'Your update were saved!'
+                );
                 return $this->redirectToRoute('tasks_list');
             }
     
@@ -91,6 +99,10 @@ class LuckyController extends AbstractController
             $task = $em->getRepository(Tasks::class)->find($id);
             $em -> remove($task);
             $em->flush();
+            $this->addFlash(
+                'warning',
+                'delete task!'
+            );
             return $this->redirectToRoute('tasks_list');
         }
         
