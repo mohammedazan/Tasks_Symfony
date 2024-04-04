@@ -84,6 +84,15 @@ class LuckyController extends AbstractController
                 'form' => $form->createView(),
             ]);
         }
+
+        #[Route('/delete_tasks/{id}', name: 'tasks_delete')]
+        public function DeleteTasks(int $id, EntityManagerInterface $em): Response
+        {
+            $task = $em->getRepository(Tasks::class)->find($id);
+            $em -> remove($task);
+            $em->flush();
+            return $this->redirectToRoute('tasks_list');
+        }
         
     
 }
